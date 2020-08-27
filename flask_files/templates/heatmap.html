@@ -1,0 +1,57 @@
+<html>
+<div>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.1.1.min.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.1.1.min.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.1.1.min.js"
+        crossorigin="anonymous"></script>
+    <div style="background-image: url('https://image.freepik.com/free-photo/concrete-wall-scratched-material-background-texture-concept_53876-31751.jpg');
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                background-size: cover;">
+<body>
+<h1  style="position:relative;left:50px;top:30px">Bills Introduced by Topic by Month</h1>
+<form action = '/heat', method="POST">
+    <table>
+        <ul>
+            <td>
+                <select type="submit" name="law">
+                    <option value = "All Bills">All Bills</option>
+                    <option value = "Became Law">Became Law</option>
+                </select>
+                <br>
+                {% for topic in topics %}
+                    <input type="checkbox" value="{{topic}}" name="checkbox">
+                    <label style="">{{topic}}</label>
+                    <br>
+                {% endfor %}
+                <br>
+                <p><input type="submit" value="Submit" method="post"></p>
+            </td>
+            <td>
+                <div style="position:relative;top:70px">
+                    {{ div | safe }}
+                </div>
+            </td>
+        </ul>
+    </table>
+    <br><br><br><br><br><br><br><br><br><br><br><br>
+
+</form>
+</body>
+        {{ javascript | safe }}
+</div>
+        <form action="/future">
+            <input type="submit" value=" " method="get" style="width:0%;border:0px;color:transparent" id="next_page">
+            <script>
+                var forward = document.body;
+                forward.addEventListener('keyup', function(event){
+                            if (event.keyCode===39) {
+                                event.preventDefault();
+                                document.getElementById('next_page').click();
+                            }
+                      });
+            </script>
+        </form>
+</html>

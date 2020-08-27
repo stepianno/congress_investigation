@@ -1,0 +1,97 @@
+<html>
+
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script src="http://www.d3plus.org/js/d3plus.js"></script>
+
+    <body>
+
+    <script>
+        var height = 700
+        var width = 1300
+        var svg = d3.select('body').append('svg').attr('height', height).attr('width', width)
+
+        svg.append('rect').attr('x',0).attr('y',0).attr('width','100%').attr('height','100%').attr('fill','#C0C0C0')
+        var boxes = new Array(500).fill(1);
+        svg.selectAll('rect').data(boxes).enter().append('rect').attr('x', function(){return Math.random()*1300})
+            .attr('y', function(){return Math.random()*700}).attr('fill', 'white')
+            .attr('height', function(d,i){return `${Math.random()*2}%`}).attr('width',function(d,i){return `${Math.random()*2}%`})
+        var g = svg.append('g').attr('transform', `translate(${width/2.1}, ${height/2})`)
+        data = [-1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1]
+        var circles = g.selectAll('circle')
+        circles.data(data).enter().append('circle')
+            .attr('cy', 0).attr('r', 25)
+            .attr('cx', function(d){return d*200})
+            .attr('fill', function(d){if (d=='-1') {return 'blue'}
+                                        if (d=='1') {return 'red'}
+                                        })
+        function spin(){
+            d3.selectAll('circle')
+            .transition().delay(function(d,i){return i*200})
+            .duration(4000).tween('attr.fill', function(){
+                var i = d3.interpolateRgb(this.getAttribute('fill'), (this.getAttribute('cx') == '-200') ? 'red' : 'blue');
+                return function(t) {
+                    this.setAttribute('fill', i(t**2));
+                }
+               })
+            .tween('pathTween', function() {return pathTween((this.getAttribute('cx') == '-200') ? path1 : path2)})
+            }
+
+
+            function pathTween(path){
+                var length = path.node().getTotalLength();
+                var r = d3.interpolate(0, length);
+                return function(t){
+                    var point = path.node().getPointAtLength(r(t));
+                    d3.select(this).attr('cx', point.x).attr('cy', point.y)
+                    }
+                }
+
+        var path1 = g.append('path')
+                    .attr('d', 'M-200,0 Q-200,-200 0,-200 Q200,-200 200,0')
+                    .attr('fill', 'none').attr('stroke-width',0).attr('stroke','black')
+
+        var path2 = g.append('path')
+                    .attr('d', 'M200,0 Q200,200 0,200 Q-200,200 -200,0')
+                    .attr('fill', 'none').attr('stroke-width',0).attr('stroke','black')
+
+        var path3 = g.append('path')
+                    .attr('d', 'M-130,-20 Q-90,-100 0,-100 Q90,-100 130,-20').attr('id', 'up_arc')
+                    .attr('fill', 'none').attr('stroke','black').attr('stroke-width',0)
+        var path4 = g.append('path')
+                    .attr('d', 'M-130,30 Q-110,110 0,110 Q110,110 130,30').attr('id', 'down_arc')
+                    .attr('fill', 'none').attr('stroke','black').attr('stroke-width',0)
+
+        g.append('text').append('textPath')
+                    .attr('xlink:href', '#up_arc').style('text-anchor', 'middle')
+                    .attr('startOffset', '50%')
+                    .text('What Does')
+                    .style('font-size', '35').style('font-family', '"Courier New", Courier, monospace')
+                    .style('font-weight', 550)
+        g.append('text').append('textPath')
+                    .attr('xlink:href', '#down_arc').style('text-anchor', 'middle')
+                    .attr('startOffset', '50%')
+                    .text('Actually Do?')
+                    .style('font-size', '35').style('font-family', '"Courier New", Courier, monospace')
+                    .style('font-weight', 550)
+        g.append('text').attr('x', -120).text('Congress').style('font-size', '50')
+            .style('font-family', '"Courier New", Courier, monospace').style('font-weight', 600)
+
+
+        spin()
+        setInterval(spin, 6001)
+    </script>
+    </body>
+        <form action="/data" method="GET">
+            <input type="submit" value=" " method="get" style="width:0%;border:0px;color:transparent" id="next_page">
+            <script>
+                var input = document.body;
+                input.addEventListener('keyup', function(event){
+                            if (event.keyCode===39) {
+                                event.preventDefault();
+                                document.getElementById('next_page').click();
+                            }
+                      });
+            </script>
+        </form>
+
+</html>

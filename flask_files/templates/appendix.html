@@ -1,0 +1,42 @@
+<html>
+<style>
+h1,h2 {
+          font-family:
+                "Courier New", Courier, monospace;
+        }
+     li { font-family:
+                "Courier New", Courier, monospace;
+        }
+</style>
+<div style="background-image: url('https://image.freepik.com/free-photo/concrete-wall-scratched-material-background-texture-concept_53876-31751.jpg');
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                background-size: cover;">
+<body>
+<h1 style="font-size:50;position:relative;top:20px;left:20px;">Appendix</h1>
+<h2 style="text-align:center;">Links to ScatterTexts</h2>
+<ul style="list-style-type:none;">
+    {% for i, topic in topics %}
+    <li style="text-align:center">
+    <form action="\appendix{{i+1}}" method="GET">
+        <input type="submit" value="{{topic}}" method="get">
+    </form>
+    </li>
+    {% endfor %}
+</ul>
+<br><br>
+</body>
+</div>
+        <form action="/end">
+            <input type="submit" value=" " method="get" style="width:0%;border:0px;color:transparent" id="next_page">
+            <script>
+                var forward = document.body;
+                forward.addEventListener('keyup', function(event){
+                            if (event.keyCode===39) {
+                                event.preventDefault();
+                                document.getElementById('next_page').click();
+                            }
+                      });
+            </script>
+        </form>
+</html>

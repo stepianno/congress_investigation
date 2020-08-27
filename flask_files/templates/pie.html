@@ -1,0 +1,80 @@
+<html>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+    <body>
+    <script>
+        var height = 700
+        var width = 1000
+        var svg = d3.select('body').append('svg').attr('height', height).attr('width', width);
+        var g_pie = svg.append('g').attr('transform', `translate(${width/2}, ${height/2})`)
+        var g_legend = svg.append('g').attr('transform', `translate(${width/4}, ${height/4})`)
+
+        var bills = [[{party:'R', count:231}, {party:'D', count:200}],
+                        [{party:'R', count:178}, {party:'D', count:110}],
+                        [{party:'R', count:190}, {party: 'D', count:280}]]
+
+        svg.append('rect').attr('height', 10).attr('width', 15).attr('id', 'zero');
+        svg.append('rect').attr('height', 10).attr('width', 15).attr('y', 15).attr('id', 'one');
+        d3.select('#zero').on('click', function(){return update(bills[0])})
+        d3.select('#one').on('click', function(){return update(bills[1])})
+
+
+        var pie = d3.pie().sort(null).value(function(d){return d.count});
+
+
+    update(bills[1])
+    setTimeout(function(){update(bills[2])}, 1000)
+
+
+
+    function update(data) {
+        var i
+        var oldRadius = 200
+        var oldData = g_pie.selectAll('path').data().map(function(d) { return d.data });
+        if (oldData.length == 0) {oldData = data};
+        var arc = d3.arc().outerRadius(oldRadius).innerRadius(0);
+        var slice = g_pie.selectAll('path').data(pie(oldData));
+        slice.enter().insert('path').attr('fill', function(d){if (d.data.party=='R'){return 'red'} else {return 'blue'}})
+            .each(function(d) {this._current = d;});
+        slice = g_pie.selectAll('path').data(pie(data));
+        slice.transition().duration(1000).attrTween('d', function(d) {
+                var interpolate = d3.interpolate(this._current, d);
+                var _this = this;
+                return function(t) {
+                    _this._current = interpolate(t);
+                    return arc(_this._current);
+                };})
+        slice.exit().transition().delay(1000).duration(0).remove();
+
+    }
+        var txt = g_legend.selectAll('text').data(pie(bills[0])).enter()
+        txt.append('text').text(function(d){return '- '+d.data.party})
+            .attr('y', function(d,i){return i*20})
+            .attr('fill', function(d){if (d.data.party=='R'){return 'red'} else {return 'blue'}})
+    </script>
+    </body>
+        var forward = document.body;
+        <form action="/heat">
+            <input type="submit" value=" " method="get" style="width:0%;border:0px;color:transparent" id="next_page">
+            <script>
+
+                forward.addEventListener('keyup', function(event){
+                            if (event.keyCode===39) {
+                                event.preventDefault();
+                                document.getElementById('next_page').click();
+                            }
+                      });
+            </script>
+        </form>
+        <form action="/nlp2">
+            <input type="submit" value=" " method="get" style="width:0%;border:0px;color:transparent" id="back_page">
+            <script>
+
+                forward.addEventListener('keyup', function(event){
+                            if (event.keyCode===37) {
+                                event.preventDefault();
+                                document.getElementById('back_page').click();
+                            }
+                      });
+            </script>
+        </form>
+</html>

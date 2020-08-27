@@ -1,0 +1,94 @@
+<html>
+<style>
+    th { height:
+        40px;
+         font-size:
+            25;
+        }
+    tr { height:
+        35px;
+          text-align:
+        center;
+        font-family:
+                "Courier New", Courier, monospace;
+         font-weight:
+            550;
+        }
+    td { padding:
+                20px;
+        }
+    h1,h2 { position:
+            relative;
+           top:
+            20px;
+          text-align:
+            center;
+          font-family:
+                "Courier New", Courier, monospace;
+        }
+</style>
+<div style="background-image: url('https://image.freepik.com/free-photo/concrete-wall-scratched-material-background-texture-concept_53876-31751.jpg');
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                background-size: cover;">
+<body>
+<h1>Topics: Derived from CountVectorizer and LDA</h1>
+<h2>With help from pyLDAviz and ScatterText</h2>
+    <br><br>
+    <table style="width:100%;">
+        <tr>
+            <th>Topic</th>
+            <th>Key Terms</th>
+            <th>Example</th>
+        </tr>
+        <tr>
+            <td>Health Care</td>
+            <td>health, disease, mental, medicare, hospital</td>
+            <td>Expanding Care for Veterans Act</td>
+        </tr>
+        <tr>
+            <td>Border</td>
+            <td>security, homeland, intelligence, alien, border</td>
+            <td>Timely Repatriation Act</td>
+        </tr>
+        <tr>
+            <td>Infrastructure</td>
+            <td>transportation, energy, research, technology, infrastructure</td>
+            <td>TSA Loose Change Act</td>
+        </tr>
+        <tr>
+            <td>Labor / Immigration</td>
+            <td>insurance, employer, employee, labor, leave</td>
+            <td>Raise the Wage Act</td>
+        </tr>
+        <tr>
+            <td>Natural Resources</td>
+            <td>land, water, wilderness, conservation, fish</td>
+            <td>Swan Lake Hydroelectric Project Boundary Correction Act</td>
+        </tr>
+        <tr>
+            <td>Civil Law</td>
+            <td>enforcement, court, crime, violation, justice</td>
+            <td>Knife Owners' Protection Act</td>
+        </tr>
+        <tr>
+            <td>Regulations</td>
+            <td>lobbying, copyright, ethics, disclosure, regulations</td>
+            <td>Ensuring VA Employee Accountability Act</td>
+        </tr>
+    </table>
+</body>
+</div>
+        <form action="/nlp2">
+            <input type="submit" value=" " method="get" style="width:0%;border:0px;color:transparent" id="next_page">
+            <script>
+                var forward = document.body;
+                forward.addEventListener('keyup', function(event){
+                            if (event.keyCode===39) {
+                                event.preventDefault();
+                                document.getElementById('next_page').click();
+                            }
+                      });
+            </script>
+        </form>
+</html>

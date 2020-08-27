@@ -1,0 +1,198 @@
+<html>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+    <body>
+    <script>
+        var data = ['budget', 'small_business', 'education', 'election', 'health_care', 'border', 'infrastructure',
+        'labor_immigration', 'chemical_substances', 'military', 'natural_resources', 'civil_law',
+        'regulations', 'tax_code', 'diplomacy'];
+        var svg = d3.select('body').append('svg').attr('height', 700).attr('width', 1300);
+        var lines = new Array(500).fill(1);
+        svg.selectAll('line').data(lines).enter().append('line')
+            .attr('x1', function(){return Math.random()*1200}).attr('x2', function(){return Math.random()*1300})
+            .attr('y1', function(){return Math.random()*700}).attr('y2', function(){return Math.random()*700})
+            .attr('fill', 'white').attr('stroke-width',1).attr('stroke','#E8E8E8')
+            .attr('height', function(d,i){return `${Math.random()*2}%`}).attr('width',function(d,i){return `${Math.random()*2}%`})
+        var g_text = svg.append('g').attr('transform', 'translate(10,100)');
+        var text = g_text.selectAll('text');
+        text.data(data).enter().append('text').attr('y', function(d,i){return 30*i}).text(function(d){return '- '+d})
+            .attr('id', function(d){return d}).style('font-family', '"Courier New", Courier, monospace');
+
+        document.getElementById('budget').addEventListener('click', function(){full_update(budget,'Budget', bills[1])});
+        document.getElementById('small_business').addEventListener('click', function(){full_update(small_business,'Small Business', bills[2])});
+        document.getElementById('education').addEventListener('click', function(){full_update(education,'Education', bills[3])});
+        document.getElementById('election').addEventListener('click', function(){full_update(election,'Election', bills[4])});
+        document.getElementById('health_care').addEventListener('click', function(){full_update(health_care,'Health Care', bills[5])});
+        document.getElementById('border').addEventListener('click', function(){full_update(border,'Border', bills[6])});
+        document.getElementById('infrastructure').addEventListener('click', function(){full_update(infrastructure,'Infrastructure', bills[7])});
+        document.getElementById('labor_immigration').addEventListener('click', function(){full_update(labor_immigration,'Labor / Immigration', bills[8])});
+        document.getElementById('chemical_substances').addEventListener('click', function(){full_update(chemical_substances,'Chemical Substances', bills[9])});
+        document.getElementById('military').addEventListener('click', function(){full_update(military,'Military', bills[10])});
+        document.getElementById('natural_resources').addEventListener('click', function(){full_update(natural_resources,'Natural Resources', bills[11])});
+        document.getElementById('civil_law').addEventListener('click', function(){full_update(civil_law,'Civil Law', bills[12])});
+        document.getElementById('regulations').addEventListener('click', function(){full_update(regulations,'Regulations', bills[13])});
+        document.getElementById('tax_code').addEventListener('click', function(){full_update(tax_code,'Tax Code', bills[14])});
+        document.getElementById('diplomacy').addEventListener('click', function(){full_update(diplomacy,'Diplomacy', bills[15])});
+
+budget = {'R': ['spending','duty','reduction','discretionary','border','homeland','foreign'],
+          'D': ['low income','covid','urban','fair','homeless','community','vouchers'],
+          'C': ['coronavirus','appropriations','enactment','fiscal','expenses','deficit','exceed']}
+small_business = {'R': ['debtor','savings','emerging growth','china','exemption','customer','policy'],
+                  'D': ['minority','emergency','covid','cannabis','qualified','borrower','corporations'],
+                  'C': ['redesignation','covid','depository','issuer','income','overdraft','loans']}
+education = {'R': ['decision','military','savings','payment','expenses','accreditation','borrower'],
+             'D': ['minority','women','nutrition','science','colleges','business','language'],
+             'C': ['postsecondary','redesignate','apprenticeships','underrepresented','credential','workforce','grant']}
+election = {'R': ['subdivision','crop','broadband','rural','agriculture','supplemental','conservation'],
+            'D': ['paper','mail','absentee','ballots','accordance','voters', 'redistricting'],
+            'C': ['cybersecurity','decennial','candidate','absentee','prohibit','agriculture','amendments']}
+health_care = {'R': ['ambulance','tick','abortion','assault','liability','suppliers','rehabilitation'],
+               'D': ['maternal','disparities','violence','nutrition','infant','outreach','racial'],
+               'C': ['covid','opioid','telehealth','veterans','medicaid','underserved','postpartum']}
+border = {'R': ['surveillance','north korea','iranian','detection','drug','guard','gang'],
+               'D': ['facility','russia','refugees','syria','lgbt','civilian','spouse'],
+               'C': ['nationality','immigrant','homeland','sanctions','lawful','unaccompanied','deportable']}
+infrastructure = {'R': ['aeronautics','driving','drug','exploration','launch','threat','algal'],
+                  'D': ['climate','coastal','emissions','housing','income','resilience','smart'],
+                  'C': ['cybersecurity','interagency','acidification','mitigation','oceanic','funding','space force']}
+labor_immigration = {'R': ['nonimmigrant','recipient','verification','accountability','sponsor','alien','comply'],
+                    'D': ['covid','arbitration','domestic violence','safety','women','sick','parent working'],
+                    'C': ['employer','beneficiary','lapse','protections','insurer','claimant','workforce']}
+chemical_substances = {'R': ['fentalyn','meat','pharmaceutical','imported','gasoline','agricultural','tariff'],
+                    'D': ['tobacoo','marijuana','rebate','islands','zero emission','nicotine','water'],
+                    'C': ['biosimilar','polyfluoroalkyl','cosmetic','opioid','drug','medicare','renewable']}
+military = {'R': ['economic opportunity','navy','allowances','permanent','spouse','transition','procurement'],
+            'D': ['officers','exposed','women','counseling','civilian','officer','war'],
+            'C': ['veterans','armed','uniform','training','authorization','combat','facilities']}
+natural_resources = {'R': ['power','alaska','gulf','geothermal','commercial','compliance','permits'],
+                     'D': ['wild','drinking water','coral','rivers','watershed','stewardship','ecosystems'],
+                     'C': ['reversionary','reclamation','wilderness','tribe','endangered','wildlife','fishery']}
+civil_law = {'R': ['abortion','minor','forfeiture','sanctuary','ninth circuit','concealed','subdivision'],
+             'D': ['employment','gun','harassment','gender','camera','consumers','confinement'],
+             'C': ['firearm','trafficking','semiautomatic','nonviolent','enforcement','pretrial','expungement']}
+regulations = {'R': ['environmental','species','insurance','license','responsible','spending','reduction'],
+               'D': ['ethics','travel','corporation','copyright','criminal','lobbying','justice'],
+               'C': ['whistleblower','rulemaking','subpeona','procedures','oversight','promulgate','standards']}
+tax_code = {'R': ['arrangement','hurricane','spending','gain','stock','coal','deductable'],
+            'D': ['husband wife','consolidation','household','forgiveness','mortgage','labor','refund'],
+            'C': ['taxable','taxpayer','benefit','exempt','subsidized','death','puerto rico']}
+diplomacy = {'R': ['taiwan','china','jerusalem','trade','sex trafficking','palestinian','relations'],
+             'D': ['humanitarian','gender','pistol','africa','burma','sexual history','culture'],
+             'C': ['commemorative','medal','surcharge','violence','smithsonian','hong kong','institution']}
+
+        svg.append('path').attr('d', 'M280,250 L1100,250').attr('stroke', 'black');
+        svg.append('path').attr('d', 'M500,220 L500,700').attr('stroke','black');
+        svg.append('path').attr('d', 'M820,220 L820,700').attr('stroke','black');
+        svg.append('text').attr('x', 290).attr('font-size', 35).attr('y', 240).text('Democrats')
+            .style('font-family', '"Courier New", Courier, monospace').style('font-weight', 600).attr('fill','blue');
+        svg.append('text').attr('x', 510).attr('font-size', 35).attr('y', 240).text('Characteristic')
+            .style('font-family', '"Courier New", Courier, monospace').style('font-weight', 600);
+        svg.append('text').attr('x', 840).attr('font-size', 35).attr('y', 240).text('Republicans')
+            .style('font-family', '"Courier New", Courier, monospace').style('font-weight', 600).attr('fill','red');
+
+        function update(data, title){
+        var iy = d3.select('#title').transition().delay(100).remove()
+        var g_tit = svg.append('g').attr('transform', 'translate(250, 100)').attr('id', 'title')
+                    .append('text').attr('font-size', 0).text(title).transition().delay(200).duration(200).attr('font-size', 60)
+                    .style('font-family', '"Courier New", Courier, monospace').style('font-weight', 600);
+        var ix = d3.select('#words').transition().delay(100).remove()
+        var g_words = svg.append('g').attr('transform', 'translate(200, 300)').attr('id','words');
+        var dem = g_words.selectAll().data(data['D']).enter();
+        var ch = g_words.selectAll().data(data['C']).enter();
+        var rep = g_words.selectAll('text').data(data['R']).enter();
+
+        dem.append('line').attr('y1', function(d,i){return i*50-15}).attr('y2', function(d,i){return i*50})
+            .attr('x1', 175).attr('x2', 175);
+        dem.append('text').attr('font-size', 0).transition().delay(200).duration(200).attr('font-size', 30)
+            .attr('x', 175).attr('y', function(d,i){return i*50}).attr('text-anchor', 'middle').text(function(d){return d})
+            .style('font-family', '"Courier New", Courier, monospace');
+        ch.append('line').attr('y1', function(d,i){return i*50-15}).attr('y2', function(d,i){return i*50})
+            .attr('x1', 470).attr('x2', 470);
+        ch.append('text').attr('font-size', 0).transition().delay(200).duration(200).attr('font-size', 30)
+            .attr('x', 470).attr('y', function(d,i){return 50*i}).attr('text-anchor', 'middle').text(function(d){return d})
+            .style('font-family', '"Courier New", Courier, monospace');
+        rep.append('line').attr('y1', function(d,i){return i*50-15}).attr('y2', function(d,i){return i*50})
+            .attr('x1', 770).attr('x2', 770);
+        rep .append('text').attr('font-size', 0).transition().delay(200).duration(200).attr('font-size', 30)
+            .attr('x', 770).attr('y', function(d,i){return 50*i}).attr('text-anchor', 'middle').text(function(d){return d})
+            .style('font-family', '"Courier New", Courier, monospace')
+        }
+
+
+
+
+        var g_pie = svg.append('g').attr('transform', `translate(1075, 100)`)
+
+
+        var bills = [[{party:'R', count:6321}, {party:'D', count:8781}],
+                        [{party:'R', count:211}, {party:'D', count:288}],
+                        [{party:'R', count:388}, {party: 'D', count:458}],
+                        [{party:'R', count:273}, {party: 'D', count:867}],
+                        [{party:'R', count:85}, {party: 'D', count:230}],
+                        [{party:'R', count:629}, {party: 'D', count:942}],
+                        [{party:'R', count:474}, {party: 'D', count:528}],
+                        [{party:'R', count:502}, {party: 'D', count:964}],
+                        [{party:'R', count:300}, {party: 'D', count:415}],
+                        [{party:'R', count:374}, {party: 'D', count:481}],
+                        [{party:'R', count:304}, {party: 'D', count:424}],
+                        [{party:'R', count:752}, {party: 'D', count:604}],
+                        [{party:'R', count:470}, {party: 'D', count:746}],
+                        [{party:'R', count:627}, {party: 'D', count:586}],
+                        [{party:'R', count:722}, {party: 'D', count:898}],
+                        [{party:'R', count:210}, {party: 'D', count:350}]]
+
+
+        var pie = d3.pie().sort(null).value(function(d){return d.count});
+
+
+    pie_update(bills[0])
+
+
+
+    function pie_update(data) {
+        var i
+        var oldRadius = 100
+        var oldData = g_pie.selectAll('path').data().map(function(d) { return d.data });
+        if (oldData.length == 0) {oldData = data};
+        var arc = d3.arc().outerRadius(oldRadius).innerRadius(70);
+        var slice = g_pie.selectAll('path').data(pie(oldData));
+        slice.enter().insert('path').attr('fill', function(d){if (d.data.party=='R'){return 'red'} else {return 'blue'}})
+            .each(function(d) {this._current = d;});
+        slice = g_pie.selectAll('path').data(pie(data));
+        slice.transition().duration(1000).attrTween('d', function(d) {
+                var interpolate = d3.interpolate(this._current, d);
+                var _this = this;
+                return function(t) {
+                    _this._current = interpolate(t);
+                    return arc(_this._current);
+                };})
+        slice.exit().transition().delay(1000).duration(0).remove();
+
+        var iz = d3.select('#legend').transition().delay(100).remove()
+        var g_legend = svg.append('g').attr('transform', `translate(1025, 100)`).attr('id', 'legend');
+        var txt = g_legend.selectAll('text').data(pie(data)).enter()
+        txt.append('text').text(function(d){return '-'+d.data.count})
+            .attr('font-size', 0).transition().delay(200).duration(200).attr('font-size', 30)
+            .attr('y', function(d,i){return i*25}).style('font-family', '"Courier New", Courier, monospace')
+            .attr('fill', function(d){if (d.data.party=='R'){return 'red'} else {return 'blue'}})
+    }
+
+    function full_update(text_data, title, pie_data){
+        update(text_data, title);
+        setTimeout(function(){pie_update(pie_data)},500);
+    }
+
+    </script>
+    </body>
+        <form action="/heat">
+            <input type="submit" value=" " method="get" style="width:0%;border:0px;color:transparent" id="next_page">
+            <script>
+                var forward = document.body;
+                forward.addEventListener('keyup', function(event){
+                            if (event.keyCode===39) {
+                                event.preventDefault();
+                                document.getElementById('next_page').click();
+                            }
+                      });
+            </script>
+        </form>
+</html>
