@@ -12,7 +12,7 @@
                 background-size: cover;">
 <body>
 <h1  style="position:relative;left:50px;top:30px">Bills Introduced by Topic by Month</h1>
-<form action = '/heat', method="POST">
+<form action = '/heat', method="POST" style="position:relative;left:50px">
     <table>
         <ul>
             <td>
@@ -23,33 +23,45 @@
                 <br>
                 {% for topic in topics %}
                     <input type="checkbox" value="{{topic}}" name="checkbox">
-                    <label style="">{{topic}}</label>
+                    <label style="padding-bottom:10px;">{{topic}}</label>
                     <br>
                 {% endfor %}
                 <br>
                 <p><input type="submit" value="Submit" method="post"></p>
             </td>
             <td>
-                <div style="position:relative;top:70px">
+                <div style="position:relative;top:70px;left:140px">
                     {{ div | safe }}
                 </div>
             </td>
         </ul>
     </table>
-    <br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 </form>
 </body>
         {{ javascript | safe }}
 </div>
-        <form action="/future">
+        <form action="/appendix">
             <input type="submit" value=" " method="get" style="width:0%;border:0px;color:transparent" id="next_page">
             <script>
                 var forward = document.body;
                 forward.addEventListener('keyup', function(event){
-                            if (event.keyCode===39) {
+                            if (event.keyCode===190) {
                                 event.preventDefault();
                                 document.getElementById('next_page').click();
+                            }
+                      });
+            </script>
+        </form>
+        <form action="/pie">
+            <input type="submit" value=" " method="get" style="width:0%;border:0px;color:transparent" id="back_page">
+            <script>
+                var forward = document.body;
+                forward.addEventListener('keyup', function(event){
+                            if (event.keyCode===188) {
+                                event.preventDefault();
+                                document.getElementById('back_page').click();
                             }
                       });
             </script>

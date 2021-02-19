@@ -24,7 +24,7 @@ h1,h2 {
     </li>
     {% endfor %}
 </ul>
-<br><br>
+<br><br><br><br><br><br><br><br><br><br>
 </body>
 </div>
         <form action="/end">
@@ -32,9 +32,21 @@ h1,h2 {
             <script>
                 var forward = document.body;
                 forward.addEventListener('keyup', function(event){
-                            if (event.keyCode===39) {
+                            if (event.keyCode===190) {
                                 event.preventDefault();
                                 document.getElementById('next_page').click();
+                            }
+                      });
+            </script>
+        </form>
+        <form action="/heat">
+            <input type="submit" value=" " method="get" style="width:0%;border:0px;color:transparent" id="back_page">
+            <script>
+                var forward = document.body;
+                forward.addEventListener('keyup', function(event){
+                            if (event.keyCode===188) {
+                                event.preventDefault();
+                                document.getElementById('back_page').click();
                             }
                       });
             </script>

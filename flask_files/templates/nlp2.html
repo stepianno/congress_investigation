@@ -15,7 +15,7 @@
             550;
         }
     td { padding:
-                20px;
+                30px;
         }
 </style>
 <div style="background-image: url('https://image.freepik.com/free-photo/concrete-wall-scratched-material-background-texture-concept_53876-31751.jpg');
@@ -77,9 +77,21 @@
             <script>
                 var forward = document.body;
                 forward.addEventListener('keyup', function(event){
-                            if (event.keyCode===39) {
+                            if (event.keyCode===190) {
                                 event.preventDefault();
                                 document.getElementById('next_page').click();
+                            }
+                      });
+            </script>
+        </form>
+        <form action="/nlp">
+            <input type="submit" value=" " method="get" style="width:0%;border:0px;color:transparent" id="back_page">
+            <script>
+                var forward = document.body;
+                forward.addEventListener('keyup', function(event){
+                            if (event.keyCode===188) {
+                                event.preventDefault();
+                                document.getElementById('back_page').click();
                             }
                       });
             </script>

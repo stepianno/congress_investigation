@@ -6,14 +6,14 @@
     <body>
 
     <script>
-        var height = 700
-        var width = 1300
+        var height = 820
+        var width = 1500
         var svg = d3.select('body').append('svg').attr('height', height).attr('width', width)
 
         svg.append('rect').attr('x',0).attr('y',0).attr('width','100%').attr('height','100%').attr('fill','#C0C0C0')
         var boxes = new Array(500).fill(1);
-        svg.selectAll('rect').data(boxes).enter().append('rect').attr('x', function(){return Math.random()*1300})
-            .attr('y', function(){return Math.random()*700}).attr('fill', 'white')
+        svg.selectAll('rect').data(boxes).enter().append('rect').attr('x', function(){return Math.random()*width})
+            .attr('y', function(){return Math.random()*height}).attr('fill', 'white')
             .attr('height', function(d,i){return `${Math.random()*2}%`}).attr('width',function(d,i){return `${Math.random()*2}%`})
         var g = svg.append('g').attr('transform', `translate(${width/2.1}, ${height/2})`)
         data = [-1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1]
@@ -86,7 +86,7 @@
             <script>
                 var input = document.body;
                 input.addEventListener('keyup', function(event){
-                            if (event.keyCode===39) {
+                            if (event.keyCode===190) {
                                 event.preventDefault();
                                 document.getElementById('next_page').click();
                             }

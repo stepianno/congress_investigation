@@ -15,7 +15,7 @@
             550;
         }
     td { padding:
-                20px;
+                30px;
         }
     h1,h2 { position:
             relative;
@@ -32,6 +32,7 @@
                 background-attachment: fixed;
                 background-size: cover;">
 <body>
+    <br/>
 <h1>Topics: Derived from CountVectorizer and LDA</h1>
 <h2>With help from pyLDAviz and ScatterText</h2>
     <br><br>
@@ -84,9 +85,21 @@
             <script>
                 var forward = document.body;
                 forward.addEventListener('keyup', function(event){
-                            if (event.keyCode===39) {
+                            if (event.keyCode===190) {
                                 event.preventDefault();
                                 document.getElementById('next_page').click();
+                            }
+                      });
+            </script>
+        </form>
+        <form action="/data">
+            <input type="submit" value=" " method="get" style="width:0%;border:0px;color:transparent" id="back_page">
+            <script>
+                var forward = document.body;
+                forward.addEventListener('keyup', function(event){
+                            if (event.keyCode===188) {
+                                event.preventDefault();
+                                document.getElementById('back_page').click();
                             }
                       });
             </script>

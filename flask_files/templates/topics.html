@@ -2,19 +2,21 @@
 <script src="https://d3js.org/d3.v5.min.js"></script>
     <body>
     <script>
+        var height = 820
+        var width = 1500
         var data = ['budget', 'small_business', 'education', 'election', 'health_care', 'border', 'infrastructure',
         'labor_immigration', 'chemical_substances', 'military', 'natural_resources', 'civil_law',
         'regulations', 'tax_code', 'diplomacy'];
-        var svg = d3.select('body').append('svg').attr('height', 700).attr('width', 1300);
+        var svg = d3.select('body').append('svg').attr('height', height).attr('width', width);
         var lines = new Array(500).fill(1);
         svg.selectAll('line').data(lines).enter().append('line')
-            .attr('x1', function(){return Math.random()*1200}).attr('x2', function(){return Math.random()*1300})
-            .attr('y1', function(){return Math.random()*700}).attr('y2', function(){return Math.random()*700})
+            .attr('x1', function(){return Math.random()*width}).attr('x2', function(){return Math.random()*width})
+            .attr('y1', function(){return Math.random()*height}).attr('y2', function(){return Math.random()*height})
             .attr('fill', 'white').attr('stroke-width',1).attr('stroke','#E8E8E8')
             .attr('height', function(d,i){return `${Math.random()*2}%`}).attr('width',function(d,i){return `${Math.random()*2}%`})
         var g_text = svg.append('g').attr('transform', 'translate(10,100)');
         var text = g_text.selectAll('text');
-        text.data(data).enter().append('text').attr('y', function(d,i){return 30*i}).text(function(d){return '- '+d})
+        text.data(data).enter().append('text').attr('y', function(d,i){return 40*i}).text(function(d){return '- '+d})
             .attr('id', function(d){return d}).style('font-family', '"Courier New", Courier, monospace');
 
         document.getElementById('budget').addEventListener('click', function(){full_update(budget,'Budget', bills[1])});
@@ -57,7 +59,7 @@ infrastructure = {'R': ['aeronautics','driving','drug','exploration','launch','t
 labor_immigration = {'R': ['nonimmigrant','recipient','verification','accountability','sponsor','alien','comply'],
                     'D': ['covid','arbitration','domestic violence','safety','women','sick','parent working'],
                     'C': ['employer','beneficiary','lapse','protections','insurer','claimant','workforce']}
-chemical_substances = {'R': ['fentalyn','meat','pharmaceutical','imported','gasoline','agricultural','tariff'],
+chemical_substances = {'R': ['fentanyl','meat','pharmaceutical','imported','gasoline','agricultural','tariff'],
                     'D': ['tobacoo','marijuana','rebate','islands','zero emission','nicotine','water'],
                     'C': ['biosimilar','polyfluoroalkyl','cosmetic','opioid','drug','medicare','renewable']}
 military = {'R': ['economic opportunity','navy','allowances','permanent','spouse','transition','procurement'],
@@ -120,7 +122,7 @@ diplomacy = {'R': ['taiwan','china','jerusalem','trade','sex trafficking','pales
 
 
 
-        var g_pie = svg.append('g').attr('transform', `translate(1075, 100)`)
+        var g_pie = svg.append('g').attr('transform', `translate(1200, 100)`)
 
 
         var bills = [[{party:'R', count:6321}, {party:'D', count:8781}],
@@ -168,7 +170,7 @@ diplomacy = {'R': ['taiwan','china','jerusalem','trade','sex trafficking','pales
         slice.exit().transition().delay(1000).duration(0).remove();
 
         var iz = d3.select('#legend').transition().delay(100).remove()
-        var g_legend = svg.append('g').attr('transform', `translate(1025, 100)`).attr('id', 'legend');
+        var g_legend = svg.append('g').attr('transform', `translate(1150, 100)`).attr('id', 'legend');
         var txt = g_legend.selectAll('text').data(pie(data)).enter()
         txt.append('text').text(function(d){return '-'+d.data.count})
             .attr('font-size', 0).transition().delay(200).duration(200).attr('font-size', 30)
@@ -188,9 +190,21 @@ diplomacy = {'R': ['taiwan','china','jerusalem','trade','sex trafficking','pales
             <script>
                 var forward = document.body;
                 forward.addEventListener('keyup', function(event){
-                            if (event.keyCode===39) {
+                            if (event.keyCode===190) {
                                 event.preventDefault();
                                 document.getElementById('next_page').click();
+                            }
+                      });
+            </script>
+        </form>
+        <form action="/nlp2">
+            <input type="submit" value=" " method="get" style="width:0%;border:0px;color:transparent" id="back_page">
+            <script>
+                var forward = document.body;
+                forward.addEventListener('keyup', function(event){
+                            if (event.keyCode===188) {
+                                event.preventDefault();
+                                document.getElementById('back_page').click();
                             }
                       });
             </script>
